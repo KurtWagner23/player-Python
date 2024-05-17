@@ -30,6 +30,7 @@ class GameConfig:
         return cls(gameconfig)
 
     def __init__(self, gameconfig: dict) -> None:
+        self.base_levels: list[BaseLevel] = [] 
         for base_level in gameconfig['base_levels']:
             self.base_levels.append(BaseLevel(base_level))
         self.paths = PathsConfig(gameconfig['paths'])

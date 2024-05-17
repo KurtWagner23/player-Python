@@ -23,6 +23,9 @@ class GameState:
 
 
     def __init__(self, gameState: dict) -> None:
+        self.actions: List[BoardAction] = []
+        self.bases: List[Base] = []
+        
         for action in gameState['actions']:
             self.actions.append(BoardAction(action))
 

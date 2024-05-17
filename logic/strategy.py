@@ -27,7 +27,7 @@ def calc_distances_to_bases(gameState : GameState, selected_base : Base) -> dict
         results[base.uid] = calc_distance(base, selected_base)
     return results
 
-def get_nearest_enemy_base(gameState : GameState, distances_to_bases : dict[int,int], selected_base : Base) -> int:
+def get_nearest_enemy_base(gameState : GameState, distances_to_bases : dict[int,int]) -> int:
     base_id_of_current_min = 0
     current_min = 100000
     for base_id, distance in distances_to_bases.items():
@@ -65,11 +65,14 @@ def decide(gameState: GameState) -> List[PlayerAction]:
     playeractions_list = []
 
     for base in gameState.bases:
-        if base.player != 7:
+        if base.player != TEAM_ID:
             continue
         distances_to_bases = calc_distances_to_bases(gameState, base)
-        nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases, base)
+        nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases)
 
-        playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population)))
+        player_action = PlayerAction(base.uid, nearest_enemy_base_id, int(base.population))
+
+        playeractions_list.append(player_action)
+
 
     return playeractions_list
