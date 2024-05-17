@@ -31,7 +31,7 @@ def get_nearest_enemy_base(gameState : GameState, distances_to_bases : dict[int,
     base_id_of_current_min = 0
     current_min = 100000
     for base_id, distance in distances_to_bases.items():
-        base = get_base_from_id(base_id)
+        base = get_base_from_id(gameState, base_id)
         if distance < current_min and distance != 0 and base.player != TEAM_ID:
             base_id_of_current_min = base_id
             current_min = distance
