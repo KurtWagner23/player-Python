@@ -70,9 +70,9 @@ def decide(gameState: GameState) -> List[PlayerAction]:
         distances_to_bases = calc_distances_to_bases(gameState, base)
         nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases)
 
-        player_action = PlayerAction(base.uid, nearest_enemy_base_id, int(base.population))
+        population_0_75 = int(0.75 * gameState.config.base_levels[base.level])
 
-        playeractions_list.append(player_action)
-
+        if base.population >= population_0_75:
+            playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, base.population - population_0_75))
 
     return playeractions_list
