@@ -1,4 +1,5 @@
 from models.base import Base
+from typing import List
 from models.board_action import BoardAction
 from models.game import Game
 from models.game_config import GameConfig
@@ -26,8 +27,7 @@ class GameState:
             self.actions.append(BoardAction(action))
 
         for base in gameState['bases']:
-            self.actions.append(Base(action))
+            self.actions.append(Base(base))
 
-        self.bases = gameState['bases']
         self.config = gameState['config']
         self.game = gameState['game']
