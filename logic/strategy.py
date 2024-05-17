@@ -11,6 +11,7 @@ def is_our_base_id(gameState : GameState, id : int) -> bool:
     for base in gameState.bases:
         if base.uid == id:
             return base.player == TEAM_ID
+    return False
         
 def get_base_from_id(gameState : GameState, id) -> Base:
     for base in gameState.bases:
@@ -29,7 +30,7 @@ def calc_distances_to_bases(gameState : GameState, selected_base : Base) -> dict
 def get_nearest_enemy_base(gameState : GameState, distances_to_bases : dict[int,int], selected_base : Base) -> int:
     base_id_of_current_min = 0
     current_min = 100000
-    for base_id, distance in distances_to_bases.values():
+    for base_id, distance in distances_to_bases.items():
         if distance < current_min:
             base_id_of_current_min = base_id
             current_min = distance
@@ -38,45 +39,36 @@ def get_nearest_enemy_base(gameState : GameState, distances_to_bases : dict[int,
 def check_for_enemy_attack(gameState:GameState) -> dict[int, tuple[int,int]]:
     attack_on_base_dict : dict[int, tuple[int,int]] = {}
     for action in gameState.actions:
-        if not is_our_base_id(action.dest):
+        if not is_our_base_id(gameState, action.dest):
             continue
-        base : Base = get_base_from_id(action.dest)
+        base : Base = get_base_from_id(gameState, action.dest)
         time_until_attack = action.progress.distance - action.progress.traveled
         attack_on_base_dict[base.uid] = (action.amount, time_until_attack)
     return attack_on_base_dict
 
 def help_bits_needed(gamestate: GameState, attack_on_bases_dict:dict, baseuid: int) -> int:
-    base :Base = get_base_from_id(baseuid)
+    base : Base = get_base_from_id(gamestate, baseuid)
     amount = -base.population
-    for attacked_base_id, values in attack_on_bases_dict.values():
+    for attacked_base_id, values in attack_on_bases_dict.items():
         if attacked_base_id == baseuid:
             amount += values[0]
     return amount
 
-def get_list_of_bases_how_need_help(gameState : GameState) -> list[int]:
-    for base in gameState.bases:
-        if base.player != 7:
-            continue
+# def get_list_of_bases_how_need_help(gameState : GameState) -> list[int]:
+#     for base in gameState.bases:
+#         if base.player != 7:
+#             continue
         
 
 def decide(gameState: GameState) -> List[PlayerAction]:
     playeractions_list = []
+
     for base in gameState.bases:
         if base.player != 7:
             continue
         distances_to_bases = calc_distances_to_bases(gameState, base)
         nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases, base)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/2)))
-
-    
-=======
         playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/6)))
->>>>>>> Stashed changes
-=======
-        playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/6)))
->>>>>>> Stashed changes
 
     return playeractions_list
