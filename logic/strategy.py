@@ -68,9 +68,13 @@ def decide(gameState: GameState) -> List[PlayerAction]:
         nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases, base)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/2)))
 
     
+=======
+        playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/6)))
+>>>>>>> Stashed changes
 =======
         playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/6)))
 >>>>>>> Stashed changes
