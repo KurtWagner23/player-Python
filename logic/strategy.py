@@ -28,12 +28,12 @@ def get_nearest_enemy_base(gameState : GameState, distances_to_bases : dict[int,
 def decide(gameState: GameState) -> List[PlayerAction]:
     playeractions_list = []
     for base in gameState.bases:
-        if base.player is not 7:
+        if base.player != 7:
             continue
         distances_to_bases = calc_distances_to_bases(gameState, base)
         nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases, base)
 
-        playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, base.population/2))
+        playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, int(base.population/2)))
 
     
 
