@@ -64,15 +64,20 @@ def help_bits_needed(gamestate: GameState, attack_on_bases_dict:dict, baseuid: i
 def decide(gameState: GameState) -> List[PlayerAction]:
     playeractions_list = []
 
+    attack_on_bases = check_for_enemy_attack(gameState)
+
     for base in gameState.bases:
         if base.player != TEAM_ID:
             continue
         distances_to_bases = calc_distances_to_bases(gameState, base)
         nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases)
 
-        population_0_75 = int(0.75 * gameState.config.base_levels[base.level].max_population)
+        max_population = gameState.config.base_levels[base.level].max_population
+        population_0_75 = int(0.75 * max_population)
 
-        if base.population > population_0_75:
+        if base.population > population_0_75 and help_bits_needed(gameState, attack_on_bases, base.uid) <= 10:
             playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, base.population - population_0_75))
+        elif  base.population == max_population:
+            playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, 1))
 
     return playeractions_list

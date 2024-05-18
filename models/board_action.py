@@ -8,15 +8,19 @@ class BoardAction(PlayerAction):
     progress: Progress  # progress of the units on the path
 
     @classmethod
-    def fromAttributes(cls, uuid: UUID, player: int, progress: Progress):
+    def fromAttributes(cls, uuid: UUID, player: int, progress: Progress, src:int, dest:int, amount:int):
         boardaction = {
             'uuid': uuid,
             'player': player,
-            'progress': progress
+            'progress': progress,
+            'src': src,
+            'dest': dest,
+            'amount': amount
         }
         return cls(boardaction)
 
     def __init__(self, boardaction: dict): 
+        super().__init__(boardaction['src'], boardaction['dest'], boardaction['amount'])
         self.uuid = UUID(boardaction['uuid'])
         self.player = boardaction['player']
         self.progress = Progress(boardaction['progress'])
