@@ -77,10 +77,10 @@ def decide(gameState: GameState) -> List[PlayerAction]:
         deat_players = (distance - grace) * death_rate if grace < distance else 0
 
         max_population = gameState.config.base_levels[base.level].max_population
-        population_0_50 = int(0.50 * max_population)
+        population_0_75 = int(0.75 * max_population)
 
-        if base.population > population_0_50 and help_bits_needed(gameState, attack_on_bases, base.uid) <= 10 and base.population - population_0_50 > deat_players:
-            playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, base.population - population_0_50))
+        if base.population > population_0_75 and help_bits_needed(gameState, attack_on_bases, base.uid) <= 10 and not deat_players:
+            playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, base.population - population_0_75))
         elif  base.population >= max_population:
             if deat_players and not len(gameState.base_levels) - 1 == base.level:
                 playeractions_list.append(PlayerAction(base.uid, base.uid, base.population - max_population + gameState.base_levels[base.level].spawn_rate))
