@@ -85,6 +85,6 @@ def decide(gameState: GameState) -> List[PlayerAction]:
             if deat_players and not len(gameState.base_levels) - 1 == base.level:
                 playeractions_list.append(PlayerAction(base.uid, base.uid, base.population - max_population + gameState.base_levels[base.level].spawn_rate))
             else:
-                playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, deat_players + 5))
+                playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, deat_players + gameState.base_levels[base.level].spawn_rate))
 
     return playeractions_list
