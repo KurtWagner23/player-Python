@@ -71,7 +71,7 @@ def decide(gameState: GameState) -> List[PlayerAction]:
             continue
         distances_to_bases = calc_distances_to_bases(gameState, base)
         nearest_enemy_base_id = get_nearest_enemy_base(gameState, distances_to_bases)
-        distance = calc_distance(base, get_base_from_id(nearest_enemy_base_id))
+        distance = calc_distance(base, get_base_from_id(gameState, nearest_enemy_base_id))
         grace = gameState.config.paths.grace_period
         death_rate = gameState.config.paths.death_rate
         deat_players = (distance - grace) * death_rate if grace < distance else 0
