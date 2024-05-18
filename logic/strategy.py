@@ -82,10 +82,10 @@ def decide(gameState: GameState) -> List[PlayerAction]:
         if base.population > population_0_75 and help_bits_needed(gameState, attack_on_bases, base.uid) <= 10 and not deat_players:
             playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, base.population - population_0_75))
         elif  base.population >= max_population:
-            if deat_players and not len(gameState.base_levels) - 1 == base.level:
-                playeractions_list.append(PlayerAction(base.uid, base.uid, base.population - max_population + gameState.base_levels[base.level].spawn_rate))
+            if deat_players and not len(gameState.config.base_levels) - 1 == base.level:
+                playeractions_list.append(PlayerAction(base.uid, base.uid, base.population - max_population + gameState.config.base_levels[base.level].spawn_rate))
             else:
-                amount = base.population - max_population + gameState.base_levels[base.level].spawn_rate
+                amount = base.population - max_population + gameState.config.base_levels[base.level].spawn_rate
                 if amount > death_rate:
                     playeractions_list.append(PlayerAction(base.uid, nearest_enemy_base_id, amount))
                 else:
